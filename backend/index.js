@@ -41,10 +41,20 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false },
 });
 
+const allowedOrigins = ['https://the-great-wok.vercel.app'];
+
 // Middleware Setup
 app.use(express.json());
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+}));
 
 // Rate Limiting
 const apiLimiter = rateLimit({
