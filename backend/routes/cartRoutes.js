@@ -147,6 +147,27 @@ router.put(
 );
 
 // 5. Delete a cart item by its ID
+router.delete('/cart/:user_id', async (req, res) => {
+  const userId = parseInt(req.params.user_id, 10);
+
+  if (isNaN(userId)) {
+    return res.status(400).json({ error: 'Invalid user ID provided. ID must be a number.' });
+  }
+
+  try {
+    // Delete all cart items for the given user ID
+    const result = await pool.query('DELETE FROM cart_items WHERE user_id = $1 RETURNING *', [userId]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'No cart items found for this user' });
+    }
+
+    res.status(200).json({ message: 'All cart items deleted successfully' });
+  } catch (err) {
+    handleError(err, res, 'Failed to delete cart items');
+  }
+});
+
 router.delete('/cart/item/:cart_item_id', async (req, res) => {
   const cartItemId = parseInt(req.params.cart_item_id, 10);
 
@@ -161,7 +182,7 @@ router.delete('/cart/item/:cart_item_id', async (req, res) => {
       return res.status(404).json({ error: 'Cart item not found' });
     }
 
-    res.status(200).json({ message: 'Cart item deleted successfully' });
+    res.status(200).json({ message: 'Cart item removed successfully' });
   } catch (err) {
     handleError(err, res, 'Failed to delete cart item');
   }

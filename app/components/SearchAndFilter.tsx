@@ -1,5 +1,3 @@
-// components/SearchAndFilter.tsx
-
 import React, { useState, useEffect } from 'react';
 
 interface Category {
@@ -55,47 +53,47 @@ const SearchAndFilter = <T extends { category_id?: number }>({
 
   return (
     <div className="p-4 bg-neutral rounded-xl shadow-lg">
-  {/* Search Bar */}
-  <div className="mb-8 flex justify-center">
-    <input
-      type="text"
-      placeholder="Search for a dish..."
-      value={searchTerm}
-      onChange={handleSearchChange}
-      className="w-full max-w-md px-5 py-3 border border-dark rounded-full shadow-sm focus:outline-none focus:ring-4 focus:ring-primary focus:border-transparent transition duration-300 ease-in-out bg-white text-dark"
-    />
-  </div>
+      {/* Search Bar */}
+      <div className="mb-6 flex justify-center">
+        <input
+          type="text"
+          placeholder="Search for a dish..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="w-full sm:max-w-md px-4 py-2 border border-dark rounded-full shadow-sm focus:outline-none focus:ring-4 focus:ring-primary focus:border-transparent transition duration-300 ease-in-out bg-white text-dark"
+        />
+      </div>
 
-  {/* Category Buttons */}
-  <div className="mb-8 flex justify-center flex-wrap space-x-3 gap-y-4">
-    {/* Show All Button */}
-    <button
-      className={`px-5 py-2 rounded-full shadow-md transition-colors duration-300 ease-in-out ${
-        selectedCategory === null
-          ? 'bg-primary text-white shadow-lg'
-          : 'bg-background text-dark hover:bg-secondary hover:text-white'
-      }`}
-      onClick={() => handleCategorySelect(null)}
-    >
-      All
-    </button>
+      {/* Category Buttons */}
+      <div className="mb-6 flex justify-center flex-wrap space-x-2 gap-y-4 sm:space-x-3">
+        {/* Show All Button */}
+        <button
+          className={`px-4 py-2 text-sm rounded-full shadow-md transition-colors duration-300 ease-in-out ${
+            selectedCategory === null
+              ? 'bg-primary text-white shadow-lg'
+              : 'bg-background text-dark hover:bg-secondary hover:text-white'
+          }`}
+          onClick={() => handleCategorySelect(null)}
+        >
+          All
+        </button>
 
-    {/* Category Buttons */}
-    {categories.map((category) => (
-      <button
-        key={category.category_id}
-        className={`px-5 py-2 rounded-full shadow-md transition-colors duration-300 ease-in-out ${
-          selectedCategory === category.category_id
-            ? 'bg-primary text-white shadow-lg'
-            : 'bg-background text-dark hover:bg-secondary hover:text-white'
-        }`}
-        onClick={() => handleCategorySelect(category.category_id)}
-      >
-        {category.category_name}
-      </button>
-    ))}
-  </div>
-</div>
+        {/* Category Buttons */}
+        {categories.map((category) => (
+          <button
+            key={category.category_id}
+            className={`px-4 py-2 text-sm rounded-full shadow-md transition-colors duration-300 ease-in-out ${
+              selectedCategory === category.category_id
+                ? 'bg-primary text-white shadow-lg'
+                : 'bg-background text-dark hover:bg-secondary hover:text-white'
+            }`}
+            onClick={() => handleCategorySelect(category.category_id)}
+          >
+            {category.category_name}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 };
 

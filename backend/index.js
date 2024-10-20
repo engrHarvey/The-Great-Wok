@@ -16,6 +16,8 @@ const dishesRoutes = require('./routes/dishesRoutes');
 const inventoryRoutes = require('./routes/inventoryRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const addressRoutes = require('./routes/addressRoutes');
+const orderRoutes = require('./routes/orderRoutes');
+const reviewroutes = require('./routes/reviewroutes');
 
 // Environment Variable Check
 if (!process.env.DATABASE_URL || !process.env.JWT_SECRET) {
@@ -97,6 +99,8 @@ app.use('/api', dishesRoutes);
 app.use('/api', inventoryRoutes);
 app.use('/api', cartRoutes);
 app.use('/api', addressRoutes);
+app.use('/api', orderRoutes);
+app.use('/api', reviewroutes);
 
 // Health Check Route
 app.get('/health', async (req, res) => {

@@ -17,7 +17,7 @@ interface AddressFormProps {
 const AddressForm: React.FC<AddressFormProps> = ({ newAddress, onAddressChange, onAddAddress }) => {
   return (
     <div className="bg-white shadow-2xl rounded-lg p-8 mb-12">
-      <h3 className="text-3xl font-bold text-secondary mb-8">Add New Address</h3>
+      <h3 className="text-2xl sm:text-3xl font-bold text-secondary mb-6 sm:mb-8">Add New Address</h3>
       <form onSubmit={onAddAddress}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Address Line */}

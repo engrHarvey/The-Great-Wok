@@ -1,3 +1,4 @@
+// Modify your useCart.tsx file
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -81,15 +82,16 @@ const useCart = () => {
         router.push('/login');
         return;
       }
-
+  
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart/item/${cart_item_id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
+  
       if (res.ok) {
+        // Update the state to remove the deleted item
         setCartItems((prevItems) => prevItems.filter((item) => item.cart_item_id !== cart_item_id));
       } else {
         throw new Error('Failed to remove cart item');
@@ -98,13 +100,13 @@ const useCart = () => {
       setError('Failed to remove cart item.');
       console.error(err);
     }
-  };
+  };  
 
   useEffect(() => {
     fetchCartItems();
   }, []);
 
-  return { cartItems, error, updateCartItem, removeCartItem };
+  return { cartItems, setCartItems, error, updateCartItem, removeCartItem }; // Expose setCartItems here
 };
 
 const getToken = () => localStorage.getItem('jwtToken');

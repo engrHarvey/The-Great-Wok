@@ -35,12 +35,19 @@ const Menu: React.FC = () => {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/dishes`);
       if (!res.ok) throw new Error(`Failed to fetch menu items: ${res.statusText}`);
       const data = await res.json();
+      
       const formattedDishes = data.map((item: any) => ({
         ...item,
         price: parseFloat(item.price) || 0,
       }));
-      setMenuItems(formattedDishes);
-      setFilteredItems(formattedDishes);
+      
+      // Sort dishes alphabetically by dish_name
+      const sortedDishes = formattedDishes.sort((a: Dish, b: Dish) =>
+        a.dish_name.localeCompare(b.dish_name)
+      );
+
+      setMenuItems(sortedDishes);
+      setFilteredItems(sortedDishes);
     } catch (err) {
       console.error("Failed to fetch menu items:", err);
     }
@@ -61,21 +68,19 @@ const Menu: React.FC = () => {
     try {
       const token = localStorage.getItem('jwtToken');
       const storedUserId = localStorage.getItem('userId');
-  
-      // Ensure the user is logged in and the userId exists
+
       if (!token || !storedUserId) {
         alert('You must log in to add items to the cart.');
         router.push('/login');
         return;
       }
-  
-      // Parse userId as an integer
+
       const userId = parseInt(storedUserId, 10);
       if (isNaN(userId) || userId <= 0) {
-        console.error('Invalid user ID:', storedUserId); // Log the invalid user ID
+        console.error('Invalid user ID:', storedUserId);
         throw new Error('Invalid user ID');
       }
-  
+
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart`, {
         method: 'POST',
         headers: {
@@ -83,40 +88,40 @@ const Menu: React.FC = () => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          user_id: userId, // Pass user_id as a positive integer
-          dish_id: item.dish_id, // Ensure dish_id is an integer
-          quantity: 1, // Default quantity of 1 when adding to cart
+          user_id: userId,
+          dish_id: item.dish_id,
+          quantity: 1,
         }),
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
-        console.log('Error response:', errorData); // Log error response for debugging
+        console.log('Error response:', errorData);
         throw new Error(`Failed to add item to cart: ${response.statusText}`);
       }
-  
+
       const result = await response.json();
       alert(`${item.dish_name} has been added to your cart!`);
-      console.log('Cart item added:', result); // Log the result for debugging
+      console.log('Cart item added:', result);
     } catch (err) {
       console.error('Error adding to cart:', err);
       alert('Failed to add item to cart. Please try again.');
     }
-  };      
+  };
 
   return (
     <main className="bg-background text-secondary min-h-screen">
       {/* Header */}
-      <header className="bg-dark py-16 shadow-lg mb-8">
-        <h1 className="text-6xl font-extrabold text-primary text-center drop-shadow-lg">
+      <header className="bg-dark py-12 sm:py-16 shadow-lg mb-6 sm:mb-8">
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-primary text-center drop-shadow-lg">
           Our Menu
         </h1>
-        <p className="text-center text-xl text-neutral mt-4 max-w-3xl mx-auto">
+        <p className="text-center text-base sm:text-lg text-neutral mt-4 max-w-lg sm:max-w-3xl mx-auto">
           Explore our carefully curated selection of authentic Asian dishes, each crafted to bring a delightful burst of flavors.
         </p>
       </header>
 
-      <div className="p-10 md:p-12 lg:p-16 max-w-7xl mx-auto">
+      <div className="p-6 sm:p-10 md:p-12 lg:p-16 max-w-7xl mx-auto">
         {/* Search and Filter Component */}
         <SearchAndFilter
           items={menuItems}
@@ -126,7 +131,7 @@ const Menu: React.FC = () => {
         />
 
         {/* Menu Items Section */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 mt-12">
+        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12 mt-8 sm:mt-12">
           {filteredItems.map((item) => (
             <MenuItemCard
               key={item.dish_id}
@@ -134,7 +139,7 @@ const Menu: React.FC = () => {
               description={item.description}
               price={item.price}
               image_url={item.image_url}
-              onAddToCart={() => handleAddToCart(item)} // Pass the add to cart handler
+              onAddToCart={() => handleAddToCart(item)}
             />
           ))}
         </section>

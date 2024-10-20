@@ -11,6 +11,7 @@ import CategoryTable from '../components/CategoryTable';
 import InventoryTable from '../components/InventoryTable';
 import ReviewTable from '../components/ReviewTable';
 import PaymentTable from '../components/PaymentTable';
+import OrderItemsTable from '../components/OrderItemsTable';
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('users'); // State for current active tab
@@ -53,6 +54,7 @@ export default function AdminDashboard() {
           {activeTab === 'inventory' && <InventoryTable />}
           {activeTab === 'reviews' && <ReviewTable />}
           {activeTab === 'payments' && <PaymentTable />}
+          {activeTab === 'order-items' && <OrderItemsTable />}
         </div>
       </div>
     </div>

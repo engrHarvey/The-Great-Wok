@@ -91,12 +91,12 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 };
 
   return (
-    <div className="bg-white p-10 shadow-2xl rounded-2xl max-w-lg mx-auto">
+    <div className="bg-white p-6 sm:p-10 shadow-2xl rounded-xl max-w-xs sm:max-w-lg mx-auto">
       <form onSubmit={handleSubmit}>
         {/* Username Field for Signup */}
         {type === 'signup' && (
-          <div className="mb-6">
-            <label htmlFor="username" className="block text-lg font-bold mb-2 text-primary">
+          <div className="mb-4 sm:mb-6">
+            <label htmlFor="username" className="block text-base sm:text-lg font-bold mb-2 text-primary">
               Username
             </label>
             <input
@@ -105,15 +105,15 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
               type="text"
               value={form.username}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-secondary bg-white shadow-sm"
+              className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-secondary bg-white shadow-sm text-sm sm:text-base"
               required
             />
           </div>
         )}
 
         {/* Email Field */}
-        <div className="mb-6">
-          <label htmlFor="email" className="block text-lg font-bold mb-2 text-primary">
+        <div className="mb-4 sm:mb-6">
+          <label htmlFor="email" className="block text-base sm:text-lg font-bold mb-2 text-primary">
             Email
           </label>
           <input
@@ -122,15 +122,15 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             type="email"
             value={form.email}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-secondary bg-white shadow-sm"
+            className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-secondary bg-white shadow-sm text-sm sm:text-base"
             required
           />
         </div>
 
         {/* Phone Field for Signup */}
         {type === 'signup' && (
-          <div className="mb-6">
-            <label htmlFor="phone" className="block text-lg font-bold mb-2 text-primary">
+          <div className="mb-4 sm:mb-6">
+            <label htmlFor="phone" className="block text-base sm:text-lg font-bold mb-2 text-primary">
               Phone
             </label>
             <input
@@ -139,15 +139,15 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
               type="text"
               value={form.phone}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-secondary bg-white shadow-sm"
+              className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-secondary bg-white shadow-sm text-sm sm:text-base"
               required
             />
           </div>
         )}
 
         {/* Password Field */}
-        <div className="mb-6">
-          <label htmlFor="password" className="block text-lg font-bold mb-2 text-primary">
+        <div className="mb-4 sm:mb-6">
+          <label htmlFor="password" className="block text-base sm:text-lg font-bold mb-2 text-primary">
             Password
           </label>
           <input
@@ -156,15 +156,15 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             type="password"
             value={form.password}
             onChange={handleChange}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-secondary bg-white shadow-sm"
+            className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-secondary bg-white shadow-sm text-sm sm:text-base"
             required
           />
         </div>
 
         {/* Repeat Password Field for Signup */}
         {type === 'signup' && (
-          <div className="mb-6">
-            <label htmlFor="repeatPassword" className="block text-lg font-bold mb-2 text-primary">
+          <div className="mb-4 sm:mb-6">
+            <label htmlFor="repeatPassword" className="block text-base sm:text-lg font-bold mb-2 text-primary">
               Repeat Password
             </label>
             <input
@@ -173,7 +173,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
               type="password"
               value={repeatPassword}
               onChange={handleRepeatPasswordChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-secondary bg-white shadow-sm"
+              className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 sm:focus:ring-4 focus:ring-secondary bg-white shadow-sm text-sm sm:text-base"
               required
             />
           </div>
@@ -181,7 +181,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
         {/* Error Message */}
         {error && (
-          <p className="text-red-600 bg-red-50 border border-red-300 rounded-lg px-4 py-3 mb-6 text-center font-semibold">
+          <p className="text-red-600 bg-red-50 border border-red-300 rounded-lg px-3 sm:px-4 py-2 sm:py-3 mb-4 sm:mb-6 text-center font-semibold text-sm sm:text-base">
             {error}
           </p>
         )}
@@ -189,7 +189,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-primary text-white py-4 rounded-full hover:bg-accent transition-all duration-200 ease-in-out shadow-md"
+          className="w-full bg-primary text-white py-3 sm:py-4 rounded-full hover:bg-accent transition-all duration-200 ease-in-out shadow-md text-sm sm:text-base"
         >
           {type === 'signup' ? 'Sign Up' : 'Login'}
         </button>

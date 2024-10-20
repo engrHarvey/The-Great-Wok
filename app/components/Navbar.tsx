@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import Image from 'next/image'; // Import Next.js Image
 
 const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -90,37 +91,41 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-primary text-neutral p-6 shadow-lg">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
+    <nav className="bg-primary text-neutral p-4 md:p-6 shadow-lg">
+      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
         {/* Left Section: Logo + Navigation Links */}
-        <div className="flex items-center space-x-6 mb-4 md:mb-0">
+        <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
           {/* Logo */}
-          <img
-            src="/logo-header.png"
-            alt="Great Wok Logo"
-            className="h-16 w-auto md:h-20" // Adjusted height for better scaling
-          />
+          <div className="relative h-12 w-36 md:h-20 md:w-48">
+            <Image
+              src="/logo-header.png" // Path to your image
+              alt="Great Wok Logo"
+              fill={true} // Use the 'fill' prop to make it responsive
+              sizes="(max-width: 768px) 100vw, 25vw" // Define sizes to improve performance
+              priority={true} // Optional: Load image with higher priority
+            />
+          </div>
 
           {/* Navigation Links: Home & Menu */}
-          <div className="flex space-x-4">
-            <Link href="/" className="hover:text-accent transition duration-300 ease-in-out text-lg">
+          <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+            <Link href="/" className="hover:text-accent transition duration-300 ease-in-out text-base md:text-lg">
               Home
             </Link>
-            <Link href="/menu" className="hover:text-accent transition duration-300 ease-in-out text-lg">
+            <Link href="/menu" className="hover:text-accent transition duration-300 ease-in-out text-base md:text-lg">
               Menu
             </Link>
           </div>
         </div>
 
         {/* Right Section: Cart Icon + Authentication Links */}
-        <div className="flex items-center justify-center md:justify-end space-x-6">
+        <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
           {/* Cart Icon with Conditional Navigation */}
           <button
             onClick={handleCartClick}
             className="relative flex items-center text-white text-lg focus:outline-none"
             aria-label="Cart"
           >
-            <FontAwesomeIcon icon={faShoppingCart} className="text-2xl" />
+            <FontAwesomeIcon icon={faShoppingCart} className="text-xl md:text-2xl" />
             {cartCount > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
                 {cartCount}
@@ -132,19 +137,18 @@ const Navbar = () => {
           {!isAuthenticated ? (
             <Link
               href="/login"
-              className="mx-3 my-2 md:my-0 bg-accent text-white px-4 py-2 rounded-full hover:bg-secondary transition duration-300 ease-in-out text-lg"
+              className="w-full md:w-auto text-center bg-accent text-white px-4 py-2 rounded-full hover:bg-secondary transition duration-300 ease-in-out text-base md:text-lg"
             >
               Login
             </Link>
           ) : (
-            <div className="flex items-center space-x-4">
-              {/* Make the Username Clickable */}
-              <Link href="/profile" className="text-lg mx-2 text-white font-semibold hover:underline">
+            <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+              <Link href="/profile" className="text-base md:text-lg text-white font-semibold hover:underline">
                 {`Welcome, ${username}`}
               </Link>
               <button
                 onClick={handleLogout}
-                className="mx-3 my-2 md:my-0 bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-500 transition duration-300 ease-in-out text-lg"
+                className="w-full md:w-auto text-center bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-500 transition duration-300 ease-in-out text-base md:text-lg"
               >
                 Logout
               </button>

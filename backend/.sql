@@ -71,7 +71,8 @@ CREATE TABLE order_items (
   order_id INTEGER REFERENCES orders(order_id) ON DELETE CASCADE,
   dish_id INTEGER REFERENCES dishes(dish_id) ON DELETE SET NULL,
   quantity INTEGER NOT NULL DEFAULT 1,
-  price DECIMAL(10, 2) NOT NULL
+  price DECIMAL(10, 2) NOT NULL,
+  status VARCHAR(50) DEFAULT 'Preparing food'
 );
 
 -- Create 'cart_items' table

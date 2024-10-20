@@ -191,4 +191,28 @@ router.put(
   }
 );
 
+// Route for Guest Login
+router.post('/guest', async (req, res) => {
+  try {
+    // Create a new guest user with a unique username (e.g., 'Guest_' + timestamp)
+    const guestUsername = `Guest_${Date.now()}`;
+
+    // Insert guest user into the database
+    const guestUserResult = await pool.query(
+      'INSERT INTO users (username, is_guest, role) VALUES ($1, TRUE, $2) RETURNING *',
+      [guestUsername, 'guest']
+    );
+
+    const guestUser = guestUserResult.rows[0];
+
+    // Generate a token for the guest user
+    const token = createJWT(guestUser);
+
+    res.status(201).json({ user: guestUser, token });
+  } catch (err) {
+    logger.error('Guest login failed:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 module.exports = router;
