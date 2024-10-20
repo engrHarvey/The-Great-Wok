@@ -20,7 +20,7 @@ interface InventoryFormProps {
   onInventoryCreated: (updatedInventory: Inventory) => void;
 }
 
-const InventoryForm: React.FC<InventoryFormProps> = ({ dishes, existingInventory, onInventoryCreated }) => {
+const InventoryForm: React.FC<InventoryFormProps> = ({ dishes, onInventoryCreated }) => {
   const [selectedDishId, setSelectedDishId] = useState<number | ''>(''); // For storing selected dish ID
   const [quantity, setQuantity] = useState<number | ''>(''); // For storing quantity to be added/updated
   const [message, setMessage] = useState<string | null>(null);

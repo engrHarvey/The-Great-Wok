@@ -1,5 +1,7 @@
 declare module '@heroicons/react/solid' {
-  export const PencilIcon: any;
-  export const TrashIcon: any;
+  import { ComponentType, SVGProps } from 'react';
+
+  export const PencilIcon: ComponentType<SVGProps<SVGSVGElement>>;
+  export const TrashIcon: ComponentType<SVGProps<SVGSVGElement>>;
   // Add more icons as needed here
 }

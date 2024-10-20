@@ -1,4 +1,3 @@
-// Modify your useCart.tsx file
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -15,33 +14,37 @@ const useCart = () => {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  const fetchCartItems = async () => {
-    try {
-      const token = getToken();
-      const userId = getUserId();
-      
-      if (!token || !userId) {
-        router.push('/login');
-        return;
-      }
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      try {
+        const token = getToken();
+        const userId = getUserId();
+        
+        if (!token || !userId) {
+          router.push('/login');
+          return;
+        }
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/cart/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-      if (res.ok) {
-        const data = await res.json();
-        setCartItems(data);
-      } else {
-        throw new Error('Failed to fetch cart items');
+        if (res.ok) {
+          const data = await res.json();
+          setCartItems(data);
+        } else {
+          throw new Error('Failed to fetch cart items');
+        }
+      } catch (err) {
+        setError('Failed to load cart items.');
+        console.error(err);
       }
-    } catch (err) {
-      setError('Failed to load cart items.');
-      console.error(err);
-    }
-  };
+    };
+
+    fetchCartItems();
+  }, [router]); // 'router' is a dependency here, as it's used in the effect.
 
   const updateCartItem = async (cart_item_id: number, quantity: number) => {
     try {
@@ -91,7 +94,6 @@ const useCart = () => {
       });
   
       if (res.ok) {
-        // Update the state to remove the deleted item
         setCartItems((prevItems) => prevItems.filter((item) => item.cart_item_id !== cart_item_id));
       } else {
         throw new Error('Failed to remove cart item');
@@ -100,11 +102,7 @@ const useCart = () => {
       setError('Failed to remove cart item.');
       console.error(err);
     }
-  };  
-
-  useEffect(() => {
-    fetchCartItems();
-  }, []);
+  };
 
   return { cartItems, setCartItems, error, updateCartItem, removeCartItem }; // Expose setCartItems here
 };

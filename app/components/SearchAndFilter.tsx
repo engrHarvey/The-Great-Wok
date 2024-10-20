@@ -23,8 +23,24 @@ const SearchAndFilter = <T extends { category_id?: number }>({
 
   // Effect to filter items when search term or category changes
   useEffect(() => {
+    const filterItems = (search: string, categoryId: number | null) => {
+      const filtered = items.filter((item) => {
+        const value = item[searchField];
+
+        // Ensure value is a valid string or number before calling toLowerCase()
+        const matchesSearch =
+          value != null && typeof value !== 'object' && String(value).toLowerCase().includes(search);
+
+        // Handle category filtering safely using type narrowing
+        const matchesCategory = categoryId ? item.category_id === categoryId : true;
+        return matchesSearch && matchesCategory;
+      });
+
+      onFilter(filtered);
+    };
+
     filterItems(searchTerm, selectedCategory);
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, items, searchField, onFilter]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value.toLowerCase());
@@ -32,23 +48,6 @@ const SearchAndFilter = <T extends { category_id?: number }>({
 
   const handleCategorySelect = (categoryId: number | null) => {
     setSelectedCategory(categoryId);
-  };
-
-  // Filter items based on search term and selected category
-  const filterItems = (search: string, categoryId: number | null) => {
-    const filtered = items.filter((item) => {
-      const value = item[searchField];
-      
-      // Ensure value is a valid string or number before calling toLowerCase()
-      const matchesSearch =
-        value != null && typeof value !== 'object' && String(value).toLowerCase().includes(search);
-
-      // Handle category filtering safely using type narrowing
-      const matchesCategory = categoryId ? item.category_id === categoryId : true;
-      return matchesSearch && matchesCategory;
-    });
-
-    onFilter(filtered);
   };
 
   return (

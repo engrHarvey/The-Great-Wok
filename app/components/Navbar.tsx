@@ -33,6 +33,7 @@ const Navbar = () => {
             setIsAuthenticated(false);
           }
         } catch (err) {
+          console.error('Error fetching user profile:', err);
           setIsAuthenticated(false);
         }
       }

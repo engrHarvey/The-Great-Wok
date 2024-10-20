@@ -34,15 +34,15 @@ const Menu: React.FC = () => {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/dishes`);
       if (!res.ok) throw new Error(`Failed to fetch menu items: ${res.statusText}`);
-      const data = await res.json();
-      
-      const formattedDishes = data.map((item: any) => ({
+      const data: Dish[] = await res.json();
+
+      const formattedDishes = data.map((item) => ({
         ...item,
-        price: parseFloat(item.price) || 0,
+        price: parseFloat(item.price.toString()) || 0, // Ensure price is a float
       }));
-      
+
       // Sort dishes alphabetically by dish_name
-      const sortedDishes = formattedDishes.sort((a: Dish, b: Dish) =>
+      const sortedDishes = formattedDishes.sort((a, b) =>
         a.dish_name.localeCompare(b.dish_name)
       );
 
@@ -57,7 +57,7 @@ const Menu: React.FC = () => {
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/categories`);
       if (!res.ok) throw new Error(`Failed to fetch categories: ${res.statusText}`);
-      const data = await res.json();
+      const data: Category[] = await res.json();
       setCategories(data);
     } catch (err) {
       console.error("Failed to fetch categories:", err);
@@ -96,7 +96,7 @@ const Menu: React.FC = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.log('Error response:', errorData);
+        console.error('Error response:', errorData);
         throw new Error(`Failed to add item to cart: ${response.statusText}`);
       }
 

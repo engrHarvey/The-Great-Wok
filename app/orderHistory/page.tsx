@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Modal from '../components/Modal'; // Import your modal component
-import { useRouter } from 'next/navigation'; // Import router to handle navigation
+import Modal from '../components/Modal';
 
 interface Order {
   order_id: number;

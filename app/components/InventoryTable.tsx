@@ -47,6 +47,7 @@ const InventoryTable: React.FC = () => {
         setError(`Error fetching dishes: ${dishesRes.statusText}`);
       }
     } catch (err) {
+      console.error('Error fetching inventory or dishes:', err); // Log the error
       setError('Failed to load inventory or dishes data.');
     }
   };
@@ -76,6 +77,7 @@ const InventoryTable: React.FC = () => {
         setError('Failed to delete the inventory item.');
       }
     } catch (err) {
+      console.error('Error deleting inventory item:', err); // Log the error
       setError('Failed to delete the inventory item.');
     }
   };
@@ -151,7 +153,7 @@ const InventoryTable: React.FC = () => {
       <Modal isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} title="Delete Inventory Item">
         {selectedItem && (
           <div>
-            <p className="mb-4">Are you sure you want to delete the inventory item for "{selectedItem.dish_name}"?</p>
+            <p className="mb-4">Are you sure you want to delete the inventory item for &quot;{selectedItem.dish_name}&quot;?</p>
             <div className="flex justify-end">
               <button
                 onClick={handleDeleteItem}

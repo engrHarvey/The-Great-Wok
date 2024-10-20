@@ -27,7 +27,7 @@ const useFetchData = () => {
         if (!res.ok) throw new Error(`Failed to fetch dishes: ${res.statusText}`);
         const data = await res.json();
         setDishes(data);
-      } catch (err) {
+      } catch {
         setError('Failed to fetch dishes. Please try again later.');
       }
     };
@@ -38,7 +38,7 @@ const useFetchData = () => {
         if (!res.ok) throw new Error(`Failed to fetch categories: ${res.statusText}`);
         const data = await res.json();
         setCategories(data);
-      } catch (err) {
+      } catch {
         setError('Failed to fetch categories. Please try again later.');
       }
     };
